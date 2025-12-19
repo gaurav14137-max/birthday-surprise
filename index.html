@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just For You, Babyyy ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* ⭐ STAR SKY */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+/* MAIN CONTENT */
+.container {
+    position: relative;
+    z-index: 2;
+    top: 14%;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 3em;
+    animation: glow 2s infinite alternate;
+}
+
+#countdown {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+#text {
+    font-size: 1.5em;
+    max-width: 750px;
+    margin: 30px auto;
+    line-height: 1.7;
+}
+
+button {
+    margin-top: 25px;
+    padding: 14px 30px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #ff4f8b;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.photos img {
+    width: 200px;
+    border-radius: 14px;
+    margin: 10px;
+    animation: fade 1.5s ease-in;
+    box-shadow: 0 0 25px rgba(255,105,180,0.7);
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255,255,255,0.6); }
+    to { text-shadow: 0 0 40px rgba(255,255,255,1); }
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 7s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+    <h1>🎂 Happy Birthday, Babuuu ❤️</h1>
+
+    <div id="countdown"></div>
+
+    <div id="text"></div>
+
+    <button id="nextBtn" onclick="showProposal()">There’s One Last Thing, Babuuu 💝</button>
+    <button id="yesBtn" onclick="finalSurprise()">YES ❤️</button>
+
+    <div class="photos" id="photos"></div>
+</div>
+
+<!-- 🎶 SONG (you can change song.mp3 later if you want) -->
+<audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ⭐ STAR SKY
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const stars = Array.from({length: 180}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5
+}));
+
+function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    stars.forEach(s => {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+    });
+}
+setInterval(drawStars, 60);
+
+// ⏳ COUNTDOWN TO 21 DEC MIDNIGHT
+const target = new Date("December 21, 2025 00:00:00").getTime();
+
+function countdown() {
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+        document.getElementById("countdown").innerHTML =
+            "🎉 It’s Your Day, My Sunaa Babuuu ❤️";
+        return;
+    }
+
+    const h = Math.floor(diff / (1000 * 60 * 60));
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        `⏳ ${h}h ${m}m ${s}s until your birthday 🌙`;
+}
+setInterval(countdown, 1000);
+
+// 💬 TYPEWRITER MESSAGE (PERSONALIZED)
+const message =
+"My sunaa babuuu ❤️\n\n" +
+"21st December isn’t just your birthday…\n" +
+"It’s the day the universe decided to become more beautiful. ✨\n\n" +
+"Babyyy, you are my calm in chaos,\n" +
+"my smile on bad days,\n" +
+"my favorite thought before sleep. 🥹\n\n" +
+"I don’t know what tomorrow brings…\n" +
+"But I know who I want beside me.\n\n" +
+"You. Always. ❤️";
+
+let i = 0;
+function typeWriter() {
+    if (i < message.length) {
+        document.getElementById("text").innerHTML +=
+            message.charAt(i) === "\n" ? "<br>" : message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 55);
+    } else {
+        document.getElementById("nextBtn").style.display = "inline-block";
+    }
+}
+typeWriter();
+
+// 💍 QUESTION
+function showProposal() {
+    document.getElementById("text").innerHTML =
+        "So today, on your special day… 💕<br><br>" +
+        "I just want to ask you one simple thing:<br><br>" +
+        "<strong>Will you be mine, forever and always? 💍❤️</strong>";
+
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("yesBtn").style.display = "inline-block";
+}
+
+// 🎉 FINAL SURPRISE
+function finalSurprise() {
+    document.getElementById("text").innerHTML =
+        "You just made my whole world brighter 🥹❤️<br><br>" +
+        "Happy Birthday, Babyyy 🎂<br><br>" +
+        "I promise to choose you,\n" +
+        "every single day,\n" +
+        "without doubt, without pause. 💖";
+
+    document.getElementById("photos").innerHTML = `
+        <img src="photo1.jpg">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+    `;
+
+    document.getElementById("yesBtn").style.display = "none";
+}
+
+// ❤️ FLOATING HEARTS
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 35 + 12 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+}, 220);
+</script>
+
+</body>
+</html>
