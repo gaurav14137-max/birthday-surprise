@@ -115,9 +115,10 @@ button:hover {
 </div>
 
 <!-- 🎶 SONG (you can change song.mp3 later if you want) -->
-<audio autoplay loop>
+<audio id="song" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-slowmotion.mp3" type="audio/mpeg">
 </audio>
+
 
 <script>
 // ⭐ STAR SKY
@@ -192,11 +193,14 @@ typeWriter();
 
 // 💍 QUESTION
 function showProposal() {
-    document.getElementById("text").innerHTML =
-        "So today, on your special day… 💕<br><br>" +
-        "I just want to ask you one simple thing:<br><br>" +
-        "<strong>Will you be mine, forever and always? 💍❤️</strong>";
+    // Play music on first click
+    const audio = document.getElementById("song");
+    audio.play();
 
+    document.getElementById("text").innerHTML =
+        "So on your special day… 💕<br><br>" +
+        "I just want to ask you one simple thing:<br><br>" +
+        "<strong>Will you be mine forever? 💍❤️</strong>";
     document.getElementById("nextBtn").style.display = "none";
     document.getElementById("yesBtn").style.display = "inline-block";
 }
